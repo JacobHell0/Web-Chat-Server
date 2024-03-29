@@ -10,7 +10,7 @@ import java.util.Map;
  * You may add more method or attributes as needed
  * **/
 public class ChatRoom {
-    private String  code;
+    private String code;
 
     //each user has an unique ID associate to their ws session and their username
     private Map<String, String> users = new HashMap<String, String>() ;
