@@ -19,6 +19,7 @@ function enterRoom(code){
 
     // create the web socket
     ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/"+code);
+    console.log("room code: "+code)
 
     ws.onmessage = function (event) {
         console.log(event.data);
