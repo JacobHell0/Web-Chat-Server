@@ -37,19 +37,20 @@ public class ChatServer {
         //functionally equivalent TODO remove these comments
         session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome to the chat room. Please state your username to begin."));
 
-        //accessing the roomID parameter
-        System.out.println(roomID);
-
+        //create entry in hashmap, example: ("6d5976c1-99c5-45cb-ada0-8b983f3efbcc", "12345")
+        String userID = session.getId();
+        roomList.put(userID, roomID);
     }
 
     @OnClose
     public void close(Session session) throws IOException, EncodeException {
         String userId = session.getId();
         // do things for when the connection closes
+        //TODO figure out what todo when connection terminates
     }
 
     @OnMessage
-    public void handleMessage(String comm, Session session, @PathParam("roomID") String roomID) throws IOException, EncodeException {
+    public void handleMessage(String comm, Session session) throws IOException, EncodeException {
 
     //        Example conversion of json messages from the client
     //        JSONObject jsonmsg = new JSONObject(comm);
@@ -61,7 +62,7 @@ public class ChatServer {
         JSONObject jsonmsg = new JSONObject(comm);
         String type = (String) jsonmsg.get("type");
         String message = (String) jsonmsg.get("msg");
-
+        String roomID = roomList.get(userID);
 
         // not their first message
         if(usernames.containsKey(userID)){
@@ -90,18 +91,16 @@ public class ChatServer {
         }
     }
 
-    private void firstMsg(String userID, String roomID, String message, Session session) throws IOException {
-        roomList.put(userID, roomID);
+    private void firstMsg(String userID, String roomId, String message, Session session) throws IOException {
         usernames.put(userID, message);
 //        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "!\"}");
         session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome, " + message + "!"));
         //broadcast this person joined the server to the rest
         String username = usernames.get(userID);
-        String roomId = roomList.get(username);
 
         //broadcast to each peer
         for(Session peer: session.getOpenSessions()){
-            if((!peer.getId().equals(userID)) && (roomList.get(usernames.get(peer.getId())).equals(roomId))){ //not the client that just connected
+            if((!peer.getId().equals(userID)) && (roomList.get(peer.getId()).equals(roomId))){ //not the client that just connected
 //                peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + message + " joined the chat room.\"}");
                 peer.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): " + message + " joined the chat room."));
             }
