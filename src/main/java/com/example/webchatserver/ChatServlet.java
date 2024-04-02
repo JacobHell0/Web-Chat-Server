@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -11,7 +13,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 /**
  * This is a class that has services
  * In our case, we are using this to generate unique room IDs**/
-@WebServlet(name = "chatServlet", value = "/chat-servlet")
+@WebServlet(name = "chatServlet", value = {"/chat-servlet", "/chat-servlet/room_list"})
 public class ChatServlet extends HttpServlet {
     private String message;
 
@@ -35,11 +37,23 @@ public class ChatServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
 
-        // send the random code as the response's content
         PrintWriter out = response.getWriter();
-        out.println(generatingRandomUpperAlphanumericString(5));
+
+        String path = request.getServletPath();
+        if("/chat-servlet/room_list".equals(path)) {
+            response.setContentType("application/json");
+            //convert to json object
+//            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            ObjectWriter ow = new ObjectMapper().writer();
+            String json = ow.writeValueAsString(rooms);
+
+            out.println(json);
+        } else {
+            // send the random code as the response's content
+            response.setContentType("text/plain");
+            out.println(generatingRandomUpperAlphanumericString(5));
+        }
 
     }
 

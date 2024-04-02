@@ -10,9 +10,24 @@
 <div>
   <button id="the-button" onClick="newRoom()">join room</button>
   <button id="force-code-debug-button" onClick="enterRoom('12345')">join 12345 room</button>
+  <button id="other debug button" onClick="getRoomList()">print room list</button>
 </div>
 <textarea title="Chat Log" id="log" readonly></textarea>
 <input title="Chat Input" id="input" type="text"/>
+
+<table id="refresh_list">
+  <thead>
+  <tr>
+    <td>Rooms</td>
+  </tr>
+  </thead>
+  <tbody id="refresh-list-body">
+
+    <!--this tr has to be here for js refreshList()-->
+    <tr id="tr_to_remove"></tr>
+  </tbody>
+
+</table>
 
 <script src="js/main.js"></script>
 </body>
