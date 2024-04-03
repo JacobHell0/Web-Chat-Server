@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="css/normalize.css">
 </head>
 <body>
-<div>
-  <button id="the-button" onClick="newRoom()">join room</button>
-  <button id="force-code-debug-button" onClick="enterRoom('12345')">join 12345 room</button>
-  <button id="other debug button" onClick="getRoomList()">print room list</button>
+<div class="container">
+  <button class="btns" id="the-button" onClick="newRoom()">Join Room</button>
+  <button class="btns" id="force-code-debug-button" onClick="enterRoom('12345')">Join 12345 Room</button>
+  <button class="btns" id="other debug button" onClick="getRoomList()">Print Room List</button>
 </div>
 <textarea title="Chat Log" id="log" readonly></textarea>
-<input title="Chat Input" id="input" type="text"/>
+<input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
 
 <table id="refresh_list">
   <thead>
