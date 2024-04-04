@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /* background-color: purple; */
+}
+
+.container {
+    /* height: 200px;
+    line-height: 200px; */
+    /* width: 300px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+
+}
+
+.inVals {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 20px;
+}
+
+.loginBtn {
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 5px solid purple;
+    border-radius: 30px;
+    background-color: white;
+    color: purple;
+    font-weight: bold;
+
+    /*  */
+    cursor: pointer;
+
+    /*  */
+    transition: background-color 0.35s, color 0.25s,
+        padding 0.35s;
+}
+
+.loginBtn:hover {
+    background-color: purple;
+    color: white;
+    padding-left: 45px;
+    padding-right: 45px;
+}
+
+.loginBtn:active {
+    opacity: 0.5;
+}
+
+span {
+    color: blue;
+    font-weight: bold;
+}
