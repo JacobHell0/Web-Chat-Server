@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel = "stylesheet" href="../css/about.css">
+<script src = "../js/about.js"></script>
+<script src = "../js/vanta.waves.min.js"></script>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>About</title>
+    </head>
+
+<body onload="onLoad(toggleBox(), toggleBox2(), toggleBox3())">
+
+    <header>
+        <button onclick="closeNAV()">-</button> <h2>About</h2>
+    </header>
+
+    <section>
+
+        <nav id = "NAVbar">
+            <a href="./index.html">Home</a>
+            <p> </p>
+            <a href="./about.html">About</a>
+        </nav>
+
+        <article id="art">
+            <h1>Created by:</h1>
+
+            <button onclick="toggleBox()">Jacob Rempel</button>
+            <div class = "box" id="nameBox">
+                <h2>Jacob Rempel</h2>
+            </div>
+
+            <div class="box" id="myBox">
+                <h2>Backend</h2>
+
+                <p>Hello, I'm Jacob, and I am partially responsible for the backend. Although I did dabble in a bit of everything.
+                    <a href ="https://github.com/jacobh3ll0"> GitHub</a>
+
+                </p>
+
+                <img src="../img/jacobsface.jpg" alt="Image">
+            </div>
+
+            <p>         </p>
+
+            <button onclick="toggleBox2()">Bilal Nazar</button>
+
+            <div class="box" id="myBox2">
+                <h2>Backend</h2>
+                <p>Hello, I'm Bilal. I worked on the backend. I helped with the design and implementation of the Algorithm
+                    and assisted with troubleshooting the errors.
+                    <a href ="https://github.com/BNaz-OTU"> GitHub</a>
+                </p>
+                <img src="../img/bilal.png" alt="Image">
+            </div>
+
+            <p>         </p>
+
+            <button onclick="toggleBox3()">Ryan Warrener</button>
+
+            <div class="box" id="myBox3">
+                <h2>Front End</h2>
+                <p>Hi, I'm Ryan and for this assignment I mainly did front end development.
+                    I was responsible for the design of both the home and about page;
+                    in addition I helped connect the end points.
+
+                    <a href ="https://github.com/BigGuyAtOTU"> GitHub</a>
+                </p>
+                <img src="../img/ryan.jpg" alt="Image">
+            </div>
+
+
+        </article>
+
+    </section>
+
+    <footer>
+        <p>hello</p>
+    </footer>
+
+
+    </body>
+
+
+
+
+
+
+
+</html>
