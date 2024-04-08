@@ -29,7 +29,7 @@ See a sample of the response data:
 
 Your client is in the `webapp` folder, when started the application will run at `http://localhost:8080/WSChatServer-1.0-SNAPSHOT/`; which will load the `index.html` file.
 
-Your client-side code will be in the `js/main.js` javascript file.
+Your client-side code will be in the `js/index.js` javascript file.
 
 > Obs. Feel free to create other helper classes as you see fit.
 > 
