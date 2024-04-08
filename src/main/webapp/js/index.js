@@ -41,6 +41,7 @@ function clearTable(tableRef) {
 function refreshList(room_list) {
     console.log("room_list: ");
     console.log(room_list);
+
     let tableRef = document.getElementById("refresh-list-body");
     clearTable(tableRef); //clear table so we have one that refreshes
     for(let i = 0; i < room_list.length; i++) {
@@ -69,6 +70,9 @@ function enterRoom(code){
     ws.onmessage = function (event) {
         console.log(event.data);
         let message = JSON.parse(event.data);
+
+        addTable(true,"[" + timestamp() + "] " + message.message + "\n")
+
         document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
     }
 
@@ -84,10 +88,38 @@ function enterRoom(code){
 }
 
 //credit to the class activity for the timestamp function
-function timestamp() {
+function timestamp()
+{
     let d = new Date(), minutes = d.getMinutes();
     if (minutes < 10) minutes = '0' + minutes;
     return d.getHours() + ':' + minutes;
 }
+
+function addTable(column,text)
+{
+    let table = document.getElementById('chart')
+    let newRow = document.createElement("tr")
+
+    let cell = document.createElement("td");
+    let cell2 = document.createElement("td2");
+    if (column == true)
+    {
+        cell.appendChild(text);
+
+    }
+    else if (column == false)
+    {
+        cell.appendChild(text);
+
+    }
+    cell2.appendChild();
+    newRow.appendChild(cell)
+    newRow.appendChild(cell2)
+    table.appendChild(newRow);
+
+}
+
+
+
 
 

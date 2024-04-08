@@ -3,22 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>Chat</title>
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/normalize.css">
 </head>
-<body onload="getRoomList()">
+<body>
 <div class="container">
   <button class="btns" id="the-button" onClick="newRoom()">Join Room</button>
+  <button class="btns" id="force-code-debug-button" onClick="enterRoom('12345')">Join 12345 Room</button>
   <button class="btns" id="other debug button" onClick="getRoomList()">Print Room List</button>
 </div>
 
 <nav id = "NAVbar">
   <a href="./index.html">Home</a>
   <p> </p>
-  <a href="./about.html">About</a>
+  <a href="../../../../../../about.html">About</a>
 </nav>
 
+<section>
+  <article>
+
+    <p>Hello</p>
+
+    <div style = "text-align: center;">
+      <table border = "1" id="chart">
+        <tr>
+          <th>Other</th>
+          <th>User</th>
+        </tr>
+        <tr>
+          <td>Row 1</td>
+          <td>Row </td>
+        </tr>
+      </table>
+
+    </div>
+    <button onclick="addTable()">Add Row</button>
+
+
+  </article>
+</section>
+
 <textarea title="Chat Log" id="log" readonly></textarea>
+
+
 <input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
 
 <table id="refresh_list">
@@ -29,12 +56,12 @@
   </thead>
   <tbody id="refresh-list-body">
 
-  <!--this tr has to be here for js refreshList()-->
-  <tr id="tr_to_remove"></tr>
+    <!--this tr has to be here for js refreshList()-->
+    <tr id="tr_to_remove"></tr>
   </tbody>
 
 </table>
 
-<script src="js/main.js"></script>
+<script src="../js/index.js"></script>
 </body>
 </html>
