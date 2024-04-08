@@ -1,8 +1,8 @@
 let ws;
 
-function newRoom(){
+function newRoom() {
     // calling the ChatServlet to retrieve a new room ID
-    let callURL= "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet";
+    let callURL = "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet";
     fetch(callURL, {
         method: 'GET',
         headers: {
@@ -13,15 +13,15 @@ function newRoom(){
         .then(response => enterRoom(response)); // enter the room with the code
 }
 
-function getRoomList(){
+function getRoomList() {
     // calling the ChatServlet to retrieve a new room ID
     console.log("making request...");
-    let callURL= "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet/room_list";
+    let callURL = "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet/room_list";
     fetch(callURL, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'Content-Type' : 'text/plain'
+            'Content-Type': 'text/plain'
         },
     })
         .then(response => response.json())
@@ -43,13 +43,13 @@ function refreshList(room_list) {
     console.log(room_list);
     let tableRef = document.getElementById("refresh-list-body");
     clearTable(tableRef); //clear table so we have one that refreshes
-    for(let i = 0; i < room_list.length; i++) {
+    for (let i = 0; i < room_list.length; i++) {
         let row = document.createElement("tr");
         row.id = "tr_to_remove";
         let cell = document.createElement("td");
         let button_to_append = document.createElement("button");
         button_to_append.textContent = room_list[i];
-        button_to_append.onclick = function() {enterRoom(room_list[i]);}; //ripped straight from lab8/9
+        button_to_append.onclick = function () { enterRoom(room_list[i]); }; //ripped straight from lab8/9
 
         //append to the tr and td elements
         cell.appendChild(button_to_append);
@@ -58,13 +58,13 @@ function refreshList(room_list) {
     }
 }
 
-function enterRoom(code){
+function enterRoom(code) {
 
     // refresh the list of rooms //TODO: jacob here: I assume we need to have an active list of rooms
 
     // create the web socket
-    ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/"+code);
-    console.log("room code: "+code)
+    ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/" + code);
+    console.log("room code: " + code)
 
     ws.onmessage = function (event) {
         console.log(event.data);
@@ -74,7 +74,7 @@ function enterRoom(code){
 
     document.getElementById("input").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
-            let request = {"type":"chat", "msg":event.target.value};
+            let request = { "type": "chat", "msg": event.target.value };
             ws.send(JSON.stringify(request));
             event.target.value = "";
         }
@@ -89,5 +89,22 @@ function timestamp() {
     if (minutes < 10) minutes = '0' + minutes;
     return d.getHours() + ':' + minutes;
 }
+
+// ------------------------------------- SIDE BAR ------------------------------------- 
+
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+
+// ------------------------------------- SIDE BAR ------------------------------------- 
+
 
 
