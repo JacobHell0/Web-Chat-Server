@@ -20,11 +20,6 @@ body {
 } */
 
 .container {
-    /* display: flex;
-    justify-content: space-evenly; */
-    /* border: 5px solid purple; */
-    /* border: solid; */
-    /* background-color: black; */
 
     /* color: white; */
     display: flex;
@@ -41,16 +36,16 @@ body {
     margin: 10px;
     border-radius: 10px;
 
-    /*  */
+    /* Text */
     font-weight: bold;
     background-color: white;
     color: orange;
     border: 5px solid orange;
 
-    /*  */
+    /* Mouse */
     cursor: pointer;
 
-    /*  */
+    /* Animation */
     transition: background-color 0.35s,
         color 0.35s;
 
@@ -65,7 +60,6 @@ body {
 .sender {
     display: flex;
     align-items: center;
-    /* width: 100%; */
 }
 
 .senderbtns {
@@ -123,8 +117,8 @@ nav {
     padding: 5px;
 
 
-    border-right: #030000;
-    border-right-style: solid;
+    /* border-right: #030000; */
+    /* border-right-style: solid; */
     text-align: center;
     font-size: 20px;
 }
@@ -134,74 +128,77 @@ nav ul {
     padding: 0;
 }
 
-/* .con {
-    display: flex;
-    justify-content: space-between;
-    justify-content: ;
-} */
-
 /* ------------------------------------- SIDE BAR ------------------------------------- */
 
 /* The sidebar menu */
 .sidebar {
+
+    /* Structure of the Sidebar */
     height: 100%;
-    /* 100% Full-height */
     width: 0;
-    /* 0 width - change this with JavaScript */
+    padding-top: 60px;
     position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Stay on top */
+
+    /* Keep the Side bar to the top-left */
     top: 0;
     left: 0;
-    background-color: #111;
-    /* Black*/
-    overflow-x: hidden;
+
+    /* Display In-Front */
+    z-index: 1;
+
+    background-color: white;
     /* Disable horizontal scroll */
-    padding-top: 60px;
-    /* Place content 60px from the top */
+    overflow-x: hidden;
+
+    /* Animation */
     transition: 0.5s;
-    /* 0.5 second transition effect to slide in the sidebar */
 }
 
 /* The sidebar links */
 .sidebar a {
-    padding: 8px 8px 8px 32px;
+    /* Structure of the Sidebar */
+    padding: 8px 8px 8px 8px;
+
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: orange;
     display: block;
+
+    /* Animation */
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidebar a:hover {
-    color: #f1f1f1;
+    color: white;
+    background-color: orange;
 }
 
 /* Position and style the close button (top right corner) */
 .sidebar .closebtn {
     position: absolute;
     top: 0;
-    right: 25px;
+    right: 0px;
     font-size: 36px;
     margin-left: 50px;
+    cursor: pointer;
 }
 
 /* The button used to open the sidebar */
 .openbtn {
     font-size: 50px;
     cursor: pointer;
-    /* background-color: #whi; */
     background-color: white;
-    color: black;
+    color: orange;
     padding: 10px 15px;
-    border: none;
+    border: 5px solid orange;
+    border-radius: 20px;
 
 }
 
 .openbtn:hover {
-    background-color: #444;
+    background-color: orange;
+    color: white;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -209,17 +206,6 @@ nav ul {
     transition: margin-left .5s;
     /* If you want a transition effect */
     padding: 20px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidebar {
-        padding-top: 15px;
-    }
-
-    .sidebar a {
-        font-size: 18px;
-    }
 }
 
 /* ------------------------------------- SIDE BAR ------------------------------------- */
