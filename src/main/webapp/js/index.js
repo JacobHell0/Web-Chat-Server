@@ -102,12 +102,12 @@ function addTable(column,text)
 
     let cell = document.createElement("td");
     let cell2 = document.createElement("td2");
-    if (column == true)
+    if (column === true)
     {
         cell.appendChild(text);
 
     }
-    else if (column == false)
+    else if (column === false)
     {
         cell.appendChild(text);
 
