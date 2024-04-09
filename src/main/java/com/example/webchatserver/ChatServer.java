@@ -24,7 +24,7 @@ public class ChatServer {
     private Map<String, String> usernames = new HashMap<String, String>();
 
     //variable used to grab the rooms from the Servlet
-    private static Set<String> rooms = ChatServlet.rooms;
+//    private static Set<String> rooms = ChatServlet.rooms;
 
     //stores the chat history as a <roomID, List<List<times, msgs>>>
     private static Map<String, List<String>> chatHistory = new HashMap<String, List<String>>();
@@ -47,21 +47,28 @@ public class ChatServer {
     @OnClose
     public void close(Session session) throws IOException, EncodeException {
         String userId = session.getId();
-        // do things for when the connection closes
-        //TODO figure out what todo when connection terminates
+        String roomId = roomList.get(userId);
+        String username = usernames.get(userId);
+
+        //broadcast left message
+        for (Session peer : session.getOpenSessions()){
+            //filter to broadcast to users in the same room
+            if(roomList.get(peer.getId()).equals(roomId)) {
+                sendMessageToClient(peer, "other", "(Server): " + username + " left the chat" +
+                                                                    " room.", roomId);
+            }
+        }
+
     }
 
     @OnMessage
     public void handleMessage(String comm, Session session) throws IOException, EncodeException {
 
-    //        Example conversion of json messages from the client
-    //        JSONObject jsonmsg = new JSONObject(comm);
-    //        String val1 = (String) jsonmsg.get("attribute1");
-    //        String val2 = (String) jsonmsg.get("attribute2");
-
         // handle the messages
         String userID = session.getId();
         String roomID = roomList.get(userID);
+
+        //checks if the user sent an image
         if(comm.startsWith("data:image/png;")) {
             //sent text is an image
             //check if the user has a username
@@ -71,8 +78,9 @@ public class ChatServer {
             pictureMsg(userID, session, comm, roomID);
             return;
         }
+
+        //the user sent a json formatted string then
         JSONObject jsonmsg = new JSONObject(comm);
-        String type = (String) jsonmsg.get("type");
         String message = (String) jsonmsg.get("msg");
 
 
@@ -83,11 +91,10 @@ public class ChatServer {
             firstMsg(userID, roomID, message, session);
         }
 
-
     }
 
+    //this logic is very similar to standard message but it needs to send different types
     private void pictureMsg(String userID, Session session, String comm, String roomID) throws IOException {
-
         String roomId = roomList.get(userID);
         for(Session peer: session.getOpenSessions()){
             //check if peer is user so it sends correct type
@@ -103,6 +110,7 @@ public class ChatServer {
         }
     }
 
+    //function to handle the logic for every message after the user's first message
     private void standardMsg(String userID, Session session, String message) throws IOException {
         String username = usernames.get(userID);
         String roomId = roomList.get(userID);
@@ -120,49 +128,50 @@ public class ChatServer {
         }
     }
 
+    //this function handles the logic for the user sending the backend their username
     private void firstMsg(String userID, String roomId, String message, Session session) throws IOException {
+        //add user to the usernames hashmap
         usernames.put(userID, message);
-//        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "!\"}");
-//        session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome, " + message + "!"));
         sendMessageToClient(session, "other", "(Server): Welcome, " + message + "!", roomId);
 
-        //broadcast this person joined the server to the rest
-        String username = usernames.get(userID);
-
-        //broadcast to each peer
+        //broadcast this person joined the server to each peer
         for(Session peer: session.getOpenSessions()){
             if((!peer.getId().equals(userID)) && (roomList.get(peer.getId()).equals(roomId))){ //not the client that just connected
-//                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): " + message + " joined the chat room."));
-                //TODO differentiate user
                 sendMessageToClient(peer, "other", "(Server): " + message + " joined the chat room.", roomId);
             }
         }
     }
 
+    //this function sends the entire chat history for roomID to the client
     private void sendHistoryToClient(Session session, String roomId) throws IOException {
         //send the entire map for that room to the client
         if(!chatHistory.containsKey(roomId)) return;
         List<String> hist = new ArrayList<String>(chatHistory.get(roomId));
         for(String item : hist) {
+            //specialized type to indicate to the javascript and to avoid recording it twice in the map
             sendMessageToClient(session, "ChatHistory", item, roomId);
         }
     }
 
     private void sendMessageToClient(Session session, String type, String message, String roomId) throws IOException {
+        //the different tyeps are:
+        //userAlert: sends a msg to the user but doesn't save it in the chat history
+        //ChatHistory: indicates the backend is sending the chat history to the user, so it doesn't create
+        //              another entry in the chat history map
+        //all others such as 'user' or 'other' which are important on the frontend but require no special
+        //logic on the backend
 
         //check if element is userAlert
         if(type.equals("userAlert")) { //don't create the entry in chat history
             session.getBasicRemote().sendText(makeMessageJSON("other", message));
             return;
         }
-//        } else if (type.equals("non")) {
-//
-//        }
 
+        //send message to client with a type
         session.getBasicRemote().sendText(makeMessageJSON(type, message));
 
-        //check if entry exists
-        if(type.equals("ChatHistory")) {return;} //don't record another chat history when sending it to user
+        //this fixes a duplicate message from being recorded in the mpa
+        if(type.equals("ChatHistory")) {return;}
         if(chatHistory.containsKey(roomId)){
             //append message
             List<String> history;
@@ -177,9 +186,9 @@ public class ChatServer {
         }
     }
 
+    //helper function to convert the message into a json format
     private String makeMessageJSON(String type, String message) {
         return "{\"type\": \"" + type + "\", \"message\":\"" + message + "\"}";
-
     }
 
 }
