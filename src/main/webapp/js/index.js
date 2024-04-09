@@ -221,8 +221,13 @@ function addTable(column, text)
     //left side, column = 0
     if(!column) {
         cell1.textContent = text;
-    } else { //right side, column = 1
+        cell1.style.backgroundColor = "grey";
+    }
+    else
+    { //right side, column = 1
         cell2.textContent = text;
+        cell2.style.backgroundColor = "#467eff";
+
     }
 
     //append children to the DOM
