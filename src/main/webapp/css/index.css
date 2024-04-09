@@ -30,8 +30,7 @@ body {
 
 }
 
-.btns
-{
+.btns {
 
     /* Button Structure */
     padding: 20px;
@@ -53,21 +52,18 @@ body {
 
 }
 
-.btns:hover
-{
+.btns:hover {
     background-color: #467eff;
     color: white;
 }
 
-.sender
-{
+.sender {
     padding-top: 0;
     display: flex;
     align-items: center;
 }
 
-.image
-{
+.image {
     display: flex;
     padding-bottom: 10px;
     padding-left: 1000px;
@@ -76,8 +72,7 @@ body {
 }
 
 
-.senderbtns
-{
+.senderbtns {
     /* Button Structure */
     /* padding-top: 20px;
     padding-bottom: 20px; */
@@ -108,8 +103,7 @@ body {
 }
 
 
-.inputBar
-{
+.inputBar {
     /* display: flex; */
     /* justify-content: space-evenly; */
     padding: 20px;
@@ -229,8 +223,7 @@ nav ul {
 /* ------------------------------------- SIDE BAR ------------------------------------- */
 
 /* ------------------------------------- MSG AREA ------------------------------------- */
-#message_area
-{
+#message_area {
     width: 100%;
     border-spacing: 5px;
     margin: 20px;
@@ -238,15 +231,13 @@ nav ul {
 
 }
 
-#other
-{
+#other {
     text-align: left;
     width: 50%;
 
 }
 
-#user
-{
+#user {
     text-align: right;
     width: 50%;
 
@@ -259,8 +250,7 @@ nav ul {
 /*    padding: 30px;*/
 /*}*/
 
-.titleUser
-{
+.titleUser {
     text-align: right;
     font-size: large;
     border: 2px solid #467eff;
@@ -273,8 +263,7 @@ nav ul {
 
 }
 
-.titleSystem
-{
+.titleSystem {
     font-size: large;
     background-color: grey;
     border: 2px solid grey;
@@ -287,23 +276,20 @@ nav ul {
 
 
 /* Changes within the Rows */
-td
-{
+td {
     padding: 20px;
 
 }
 
 
-.container2
-{
+.container2 {
     margin-left: 20px;
     margin-right: 20px;
 
 }
 
 /*Table border*/
-.subContatiner
-{
+.subContatiner {
     border: 2px solid #030000;
 
     margin-top: 25px;
@@ -313,6 +299,9 @@ td
     align-items: center;
 }
 
+img {
+    width: 300px;
+}
 
 /* ------------------------------------- MSG AREA ------------------------------------- */
 /* table { */
@@ -322,8 +311,7 @@ td
 
 /* ------------------------------------- ROOM VIEWER -------------------------------------  */
 
-.roomContainer
-{
+.roomContainer {
     display: flex;
     justify-content: center;
     border: 5px solid rgb(3, 0, 0);
