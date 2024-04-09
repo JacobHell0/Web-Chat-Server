@@ -94,6 +94,12 @@ function enterRoom(code) {
     ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/" + code);
     console.log("room code: " + code)
 
+    //update the html to display the room you are in
+    let text = document.getElementById("in-room-indicator").innerHTML;
+    console.log(text);
+    // text = "You are in room: " + code;
+    document.getElementById("in-room-indicator").innerHTML = "You are in room: " + code;
+
     //function that is called when receiving a message from backend
     ws.onmessage = function (event) {
         let message = JSON.parse(event.data);
