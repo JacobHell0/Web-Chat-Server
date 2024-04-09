@@ -9,7 +9,7 @@
 
 
 </head>
-<body>
+<body onload="getRoomList()">
 <div class="container">
 
   <!-- SIDE BAR -->
@@ -28,7 +28,6 @@
   </div>
 
   <button class="btns" id="the-button" onClick="newRoom()">Join Room</button>
-  <button class="btns" id="force-code-debug-button" onClick="enterRoom('12345')">Join 12345 Room</button>
   <button class="btns" id="other debug button" onClick="getRoomList()">Print Room List</button>
 
 </div>
@@ -37,20 +36,15 @@
 
 <section>
   <article>
-    <p>Hello</p>
-    <div style = "text-align: center;">
-      <table border = "1" id="chart">
+    <div>
+      <table border = "1" id="message_area">
         <tr>
-          <th>Other</th>
-          <th>User</th>
-        </tr>
-        <tr>
-          <td>Row 1</td>
-          <td>Row </td>
+          <td>--------------------------System--------------------------</td>
+          <td>---------------------------User---------------------------</td>
         </tr>
       </table>
     </div>
-    <button onclick="addTable()">Add Row</button>
+<!--    <button onclick="addTable(1, 'test')">DEBUG, REMOVE: Add Row</button>-->
 
 
   </article>
@@ -66,6 +60,10 @@
   <button class="senderbtns">SEND</button>
 </div>
 
+<input id="input_button" type="file" accept="image/png, image/jpeg"/>
+<button class="senderbtns" onclick="sendImage()">SEND IMAGE</button>
+
+
 <table id="refresh_list">
   <thead>
   <tr>
@@ -77,6 +75,7 @@
     <!--this tr has to be here for js refreshList()-->
     <tr id="tr_to_remove"></tr>
   </tbody>
+
 
 </table>
 

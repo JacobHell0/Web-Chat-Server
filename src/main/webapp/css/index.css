@@ -210,6 +210,27 @@ nav ul {
 
 /* ------------------------------------- SIDE BAR ------------------------------------- */
 
+/* ------------------------------------- MSG AREA ------------------------------------- */
+#message_area {
+    width: 100%;
+    border-spacing: 3px;
+}
+#other {
+    text-align: left;
+    width: 50%;
+}
+#user {
+    text-align: right;
+    width: 50%;
+}
+
+/*.chatbox {*/
+/*    padding: 30px;*/
+/*}*/
+
+
+
+/* ------------------------------------- MSG AREA ------------------------------------- */
 table
 {
     margin: 0 auto; /* Set left and right margins to "auto" */

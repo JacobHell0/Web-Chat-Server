@@ -1,5 +1,45 @@
 let ws;
 
+//send image stuff
+function sendImage() {
+    //get image and store it
+    let img = document.getElementById("input_button");
+    if(img.files.length === 0) {
+        console.log("img empty");
+    } else {
+        // console.log("img:");
+        // console.log(img.files[0]);
+        // // ws.send("test");
+        //
+        // //json stringify the file, to do this, make an object and stringify that
+        // let file = img.files[0];
+        // let object = {
+        //     'lastModified' : file.lastModified,
+        //     'lastModifiedDate' : file.lastModifiedDate,
+        //     'name' : file.name,
+        //     'size' : file.size,
+        //     'type' : file.size,
+        // };
+        // let serialize = "";
+        // const file_reader = new FileReader();
+        // file_reader.writeText(file).then(r => serialize);
+        // console.log(serialize);
+        // let blob;
+        // file_reader.readAsText(blob);
+        //
+        // let jsonfile = JSON.stringify(object)
+        // console.log(jsonfile);
+        // ws.send(jsonfile);
+
+        let file = img.files[0];
+        const file_reader = new FileReader();
+        file_reader.readAsDataURL(file);
+
+        //to get the file_reader
+    }
+
+}
+
 function newRoom() {
     // calling the ChatServlet to retrieve a new room ID
     let callURL = "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet";
@@ -68,18 +108,29 @@ function enterRoom(code) {
     console.log("room code: " + code)
 
     ws.onmessage = function (event) {
-        console.log(event.data);
         let message = JSON.parse(event.data);
+        console.log(event.data);
+        switch(message.type) {
+            case "user":
+                addTable(1,"[" + timestamp() + "] " + message.message + "\n")
+                break;
+            case "other":
+                addTable(0,"[" + timestamp() + "] " + message.message + "\n")
+                break;
+            case "ChatHistory":
+                addTable(0,"[hist] " + message.message + "\n")
+                break;
 
-        addTable(true,"[" + timestamp() + "] " + message.message + "\n")
+        }
 
-        document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
+        // document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
     }
 
     document.getElementById("input").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             let request = { "type": "chat", "msg": event.target.value };
             ws.send(JSON.stringify(request));
+
             event.target.value = "";
         }
     });
@@ -114,25 +165,29 @@ function closeNav() {
 
 function addTable(column,text)
 {
-    let table = document.getElementById('chart')
+    let table = document.getElementById('message_area')
     let newRow = document.createElement("tr")
 
-    let cell = document.createElement("td");
-    let cell2 = document.createElement("td2");
-    if (column === true)
-    {
-        cell.appendChild(text);
+    let cell1 = document.createElement("td");
+    let cell2 = document.createElement("td");
 
-    }
-    else if (column === false)
-    {
-        cell.appendChild(text);
+    cell1.id = "other";
+    cell2.id = "user";
 
+    cell1.class = "chatbox";
+    cell2.class = "chatbox";
+
+    //left side, column = 0
+    if(!column) {
+        cell1.textContent = text;
+    } else { //right side, column = 1
+        cell2.textContent = text;
     }
-    cell2.appendChild();
-    newRow.appendChild(cell)
+
+    newRow.appendChild(cell1)
     newRow.appendChild(cell2)
     table.appendChild(newRow);
+
 
 }
 
