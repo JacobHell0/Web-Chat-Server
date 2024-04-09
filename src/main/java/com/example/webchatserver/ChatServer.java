@@ -61,10 +61,20 @@ public class ChatServer {
 
         // handle the messages
         String userID = session.getId();
+        String roomID = roomList.get(userID);
+        if(comm.startsWith("data:image/png;")) {
+            //sent text is an image
+            //check if the user has a username
+            if(!usernames.containsKey(userID)){return;} //reject request
+
+            //send image to other users
+            pictureMsg(userID, session, comm, roomID);
+            return;
+        }
         JSONObject jsonmsg = new JSONObject(comm);
         String type = (String) jsonmsg.get("type");
         String message = (String) jsonmsg.get("msg");
-        String roomID = roomList.get(userID);
+
 
         // not their first message
         if(usernames.containsKey(userID)){
@@ -74,6 +84,23 @@ public class ChatServer {
         }
 
 
+    }
+
+    private void pictureMsg(String userID, Session session, String comm, String roomID) throws IOException {
+
+        String roomId = roomList.get(userID);
+        for(Session peer: session.getOpenSessions()){
+            //check if peer is user so it sends correct type
+            if(peer.getId().equals(userID)) {
+                sendMessageToClient(peer, "user-image", comm, roomID);
+            } else { //actual peer
+                //since the roomList uses UUID, not username
+                if (roomList.get(peer.getId()).equals(roomId)) //check if peer is in same room
+                {
+                    sendMessageToClient(peer, "other-image", comm, roomID);
+                }
+            }
+        }
     }
 
     private void standardMsg(String userID, Session session, String message) throws IOException {
@@ -128,10 +155,14 @@ public class ChatServer {
             session.getBasicRemote().sendText(makeMessageJSON("other", message));
             return;
         }
+//        } else if (type.equals("non")) {
+//
+//        }
 
         session.getBasicRemote().sendText(makeMessageJSON(type, message));
 
         //check if entry exists
+        if(type.equals("ChatHistory")) {return;} //don't record another chat history when sending it to user
         if(chatHistory.containsKey(roomId)){
             //append message
             List<String> history;
