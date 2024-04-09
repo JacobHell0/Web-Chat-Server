@@ -7,9 +7,7 @@ import jakarta.websocket.server.ServerEndpoint;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -28,14 +26,15 @@ public class ChatServer {
     //variable used to grab the rooms from the Servlet
     private static Set<String> rooms = ChatServlet.rooms;
 
+    //stores the chat history as a <roomID, List<List<times, msgs>>>
+    private static Map<String, List<String>> chatHistory = new HashMap<String, List<String>>();
+
 
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
 
-
-        //session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome to the chat room. Please state your username to begin.\"}");
-        //functionally equivalent TODO remove these comments
-        session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome to the chat room. Please state your username to begin."));
+        //basically userAlert just prevents it from going into the chatHistory
+        sendMessageToClient(session, "userAlert", "(Server): Welcome to the chat room. Please state your username to begin.", roomID);
 
         //create entry in hashmap, example: ("6d5976c1-99c5-45cb-ada0-8b983f3efbcc", "12345")
         String userID = session.getId();
@@ -72,7 +71,6 @@ public class ChatServer {
         }
 
 
-
     }
 
     private void standardMsg(String userID, Session session, String message) throws IOException {
@@ -85,8 +83,8 @@ public class ChatServer {
             //since the roomList uses UUID, not username
             if(roomList.get(peer.getId()).equals(roomId))
             {
-//                    peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message+"\"}");
-                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(" + username + "): " + message));
+//                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(" + username + "): " + message));
+                sendMessageToClient(peer, "chatUser","(" + username + "): " + message, roomId);
             }
         }
     }
@@ -94,21 +92,49 @@ public class ChatServer {
     private void firstMsg(String userID, String roomId, String message, Session session) throws IOException {
         usernames.put(userID, message);
 //        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "!\"}");
-        session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome, " + message + "!"));
+//        session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome, " + message + "!"));
+        sendMessageToClient(session, "chat", "(Server): Welcome, " + message + "!", roomId);
+
         //broadcast this person joined the server to the rest
         String username = usernames.get(userID);
 
         //broadcast to each peer
         for(Session peer: session.getOpenSessions()){
             if((!peer.getId().equals(userID)) && (roomList.get(peer.getId()).equals(roomId))){ //not the client that just connected
-//                peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + message + " joined the chat room.\"}");
-                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): " + message + " joined the chat room."));
+//                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): " + message + " joined the chat room."));
+                sendMessageToClient(peer, "chat", "(Server): " + message + " joined the chat room.", roomId);
             }
+        }
+    }
+
+    private void sendMessageToClient(Session session, String type, String message, String roomId) throws IOException {
+
+        //check if element is userAlert
+        if(type.equals("userAlert")) { //don't create the entry
+            session.getBasicRemote().sendText(makeMessageJSON("chat", message));
+            return;
+        }
+
+        session.getBasicRemote().sendText(makeMessageJSON(type, message));
+
+        //check if entry exists
+        if(chatHistory.containsKey(roomId)){
+            //append message
+            List<String> history;
+            history = chatHistory.get(roomId);
+            history.add(message);
+            chatHistory.put(roomId, history);
+        } else {
+            //create entry
+            List<String> messages = new ArrayList<>();
+            messages.add(message);
+            chatHistory.put(roomId, messages);
         }
     }
 
     private String makeMessageJSON(String type, String message) {
         return "{\"type\": \"" + type + "\", \"message\":\"" + message + "\"}";
+
     }
 
 }

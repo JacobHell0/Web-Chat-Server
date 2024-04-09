@@ -59,5 +59,35 @@ function toggleBox3()
     background()
 }
 
+function onLoad()
+{
+    console.log("running background");
+    toggleBox();
+    toggleBox2();
+    toggleBox3();
+    background();
+
+}
+
+function background()
+{
+    VANTA.WAVES
+    ({
+        el: "#art",
+        mouseControls: false,
+        touchControls: false,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x969696,
+        shininess: 18.00,
+        waveHeight: 40.00,
+        waveSpeed: 0.30,
+        zoom: 1
+    })
+}
+
 
 

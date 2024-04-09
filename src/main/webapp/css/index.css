@@ -209,3 +209,8 @@ nav ul {
 }
 
 /* ------------------------------------- SIDE BAR ------------------------------------- */
+
+table
+{
+    margin: 0 auto; /* Set left and right margins to "auto" */
+}

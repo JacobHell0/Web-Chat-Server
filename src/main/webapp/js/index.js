@@ -7,6 +7,7 @@ function newRoom() {
         method: 'GET',
         headers: {
             'Accept': 'text/plain',
+
         },
     })
         .then(response => response.text())
@@ -69,6 +70,9 @@ function enterRoom(code) {
     ws.onmessage = function (event) {
         console.log(event.data);
         let message = JSON.parse(event.data);
+
+        addTable(true,"[" + timestamp() + "] " + message.message + "\n")
+
         document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
     }
 
@@ -84,13 +88,14 @@ function enterRoom(code) {
 }
 
 //credit to the class activity for the timestamp function
-function timestamp() {
+function timestamp()
+{
     let d = new Date(), minutes = d.getMinutes();
     if (minutes < 10) minutes = '0' + minutes;
     return d.getHours() + ':' + minutes;
 }
 
-// ------------------------------------- SIDE BAR ------------------------------------- 
+// ------------------------------------- SIDE BAR -------------------------------------
 
 /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
 function openNav() {
@@ -104,7 +109,34 @@ function closeNav() {
     document.getElementById("main").style.marginLeft = "0";
 }
 
-// ------------------------------------- SIDE BAR ------------------------------------- 
+// ------------------------------------- SIDE BAR -------------------------------------
+
+
+function addTable(column,text)
+{
+    let table = document.getElementById('chart')
+    let newRow = document.createElement("tr")
+
+    let cell = document.createElement("td");
+    let cell2 = document.createElement("td2");
+    if (column === true)
+    {
+        cell.appendChild(text);
+
+    }
+    else if (column === false)
+    {
+        cell.appendChild(text);
+
+    }
+    cell2.appendChild();
+    newRow.appendChild(cell)
+    newRow.appendChild(cell2)
+    table.appendChild(newRow);
+
+}
+
+
 
 
 
