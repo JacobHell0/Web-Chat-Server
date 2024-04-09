@@ -69,7 +69,7 @@ body {
 .image
 {
     display: flex;
-        padding-bottom: 10px;
+    padding-bottom: 10px;
     padding-left: 1000px;
     align-items: end;
 
@@ -277,6 +277,8 @@ nav ul {
 {
     font-size: large;
     background-color: grey;
+    border: 2px solid grey;
+
     border-radius: 20px;
 
     text-align: left;

@@ -190,10 +190,18 @@ function addImageToTable(column, base64) {
     img.src = base64;
 
     //left side, column = 0
-    if(!column) {
+    if(!column)
+    {
         cell1.appendChild(img);
+        cell1.style.backgroundColor = "grey";
+        cell1.style.border = "2px"
+        cell1.style.borderRadius = "20px";
+
     } else { //right side, column = 1
         cell2.appendChild(img);
+        cell2.style.backgroundColor = "#467eff";
+        cell2.style.borderRadius = "20px";
+        cell2.style.border = "2px"
     }
 
     newRow.appendChild(cell1)
@@ -222,11 +230,18 @@ function addTable(column, text)
     if(!column) {
         cell1.textContent = text;
         cell1.style.backgroundColor = "grey";
+        cell1.style.border = "2px"
+        cell1.style.borderRadius = "20px";
+
     }
     else
     { //right side, column = 1
         cell2.textContent = text;
         cell2.style.backgroundColor = "#467eff";
+        cell2.style.borderRadius = "20px";
+        cell2.style.border = "2px"
+
+
 
     }
 
