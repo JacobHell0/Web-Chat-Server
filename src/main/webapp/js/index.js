@@ -33,9 +33,16 @@ function sendImage() {
 
         let file = img.files[0];
         const file_reader = new FileReader();
+        //to get the file_reader to send things to the websocket we can add a listener
+
+        file_reader.onload = function(event) {
+            const data = event.target.result; //get the file
+            console.log("sending data");
+            ws.send(data);
+            console.log("data sent");
+        };
         file_reader.readAsDataURL(file);
 
-        //to get the file_reader
     }
 
 }
@@ -112,14 +119,28 @@ function enterRoom(code) {
         console.log(event.data);
         switch(message.type) {
             case "user":
-                addTable(1,"[" + timestamp() + "] " + message.message + "\n")
+                addTable(1,"[" + timestamp() + "] " + message.message + "\n");
                 break;
             case "other":
-                addTable(0,"[" + timestamp() + "] " + message.message + "\n")
+                addTable(0,"[" + timestamp() + "] " + message.message + "\n");
                 break;
             case "ChatHistory":
-                addTable(0,"[hist] " + message.message + "\n")
+                //check for image
+                console.log("msg123: " + message.message.substring(0, 15));
+                if(message.message.substring(0, 15) === "data:image/png;") {
+                    addImageToTable(0, message.message);
+                } else {
+                    addTable(0,"[hist] " + message.message + "\n");
+                }
                 break;
+            case "user-image":
+                addImageToTable(1, message.message);
+                break;
+            case "other-image":
+                addImageToTable(0, message.message);
+                break;
+            default:
+                console.log("type: " + message.type + ", msg: " + message.message);
 
         }
 
@@ -162,8 +183,36 @@ function closeNav() {
 
 // ------------------------------------- SIDE BAR -------------------------------------
 
+function addImageToTable(column, base64) {
+    let table = document.getElementById('message_area')
+    let newRow = document.createElement("tr")
 
-function addTable(column,text)
+    let cell1 = document.createElement("td");
+    let cell2 = document.createElement("td");
+
+    cell1.id = "other";
+    cell2.id = "user";
+
+    cell1.class = "chatbox";
+    cell2.class = "chatbox";
+
+    //create image
+    let img = document.createElement("img");
+    img.src = base64;
+
+    //left side, column = 0
+    if(!column) {
+        cell1.appendChild(img);
+    } else { //right side, column = 1
+        cell2.appendChild(img);
+    }
+
+    newRow.appendChild(cell1)
+    newRow.appendChild(cell2)
+    table.appendChild(newRow);
+}
+
+function addTable(column, text)
 {
     let table = document.getElementById('message_area')
     let newRow = document.createElement("tr")
