@@ -30,7 +30,8 @@ body {
 
 }
 
-.btns {
+.btns
+{
 
     /* Button Structure */
     padding: 20px;
@@ -40,8 +41,8 @@ body {
     /* Text */
     font-weight: bold;
     background-color: white;
-    color: orange;
-    border: 5px solid orange;
+    color: #467eff;
+    border: 5px solid #467eff;
 
     /* Mouse */
     cursor: pointer;
@@ -52,22 +53,36 @@ body {
 
 }
 
-.btns:hover {
-    background-color: orange;
+.btns:hover
+{
+    background-color: #467eff;
     color: white;
 }
 
-.sender {
+.sender
+{
+    padding-top: 0;
     display: flex;
     align-items: center;
 }
 
-.senderbtns {
+.image
+{
+    display: flex;
+        padding-bottom: 10px;
+    padding-left: 1000px;
+    align-items: end;
+
+}
+
+
+.senderbtns
+{
     /* Button Structure */
     /* padding-top: 20px;
     padding-bottom: 20px; */
     padding-left: 25px;
-    padding-right: 25px;
+    padding-right: 15px;
     /* margin: 10px; */
     border-radius: 10px;
     height: 60px;
@@ -76,8 +91,8 @@ body {
     /*  */
     font-weight: bold;
     background-color: white;
-    color: orange;
-    border: 5px solid orange;
+    color: #467eff;
+    border: 5px solid #467eff;
 
     /*  */
     cursor: pointer;
@@ -88,12 +103,13 @@ body {
 }
 
 .senderbtns:hover {
-    background-color: orange;
+    background-color: #467eff;
     color: white;
 }
 
 
-.inputBar {
+.inputBar
+{
     /* display: flex; */
     /* justify-content: space-evenly; */
     padding: 20px;
@@ -161,7 +177,7 @@ nav ul {
 
     text-decoration: none;
     font-size: 25px;
-    color: orange;
+    color: #467eff;
     display: block;
 
     /* Animation */
@@ -170,8 +186,8 @@ nav ul {
 
 /* When you mouse over the navigation links, change their color */
 .sidebar a:hover {
-    color: white;
-    background-color: orange;
+    color: #467eff;
+    background-color: #ffffff;
 }
 
 /* Position and style the close button (top right corner) */
@@ -189,15 +205,15 @@ nav ul {
     font-size: 50px;
     cursor: pointer;
     background-color: white;
-    color: orange;
+    color: #467eff;
     padding: 10px 15px;
-    border: 5px solid orange;
+    border: 5px solid #467eff;
     border-radius: 20px;
 
 }
 
 .openbtn:hover {
-    background-color: orange;
+    background-color: #467eff;
     color: white;
 }
 
@@ -206,55 +222,90 @@ nav ul {
     transition: margin-left .5s;
     /* If you want a transition effect */
     padding: 20px;
+    display: flex;
+
 }
 
 /* ------------------------------------- SIDE BAR ------------------------------------- */
 
 /* ------------------------------------- MSG AREA ------------------------------------- */
-#message_area {
+#message_area
+{
     width: 100%;
     border-spacing: 5px;
     margin: 20px;
     margin-left: -2px;
+
 }
 
-#other {
+#other
+{
     text-align: left;
     width: 50%;
+
 }
 
-#user {
+#user
+{
     text-align: right;
     width: 50%;
+
+
+
+
 }
 
 /*.chatbox {*/
 /*    padding: 30px;*/
 /*}*/
 
-.titleUser {
-    text-align: center;
+.titleUser
+{
+    text-align: right;
+    font-size: large;
+    border: 2px solid #467eff;
+    background-color: #467eff;
+    border-radius: 20px;
+
+
+
+
+
 }
 
-.titleSystem {
-    text-align: center;
+.titleSystem
+{
+    font-size: large;
+    background-color: grey;
+    border-radius: 20px;
+
+    text-align: left;
 }
+
+
 
 /* Changes within the Rows */
-td {
+td
+{
     padding: 20px;
+
 }
 
 
-.container2 {
+.container2
+{
     margin-left: 20px;
     margin-right: 20px;
+
 }
 
-.subContatiner {
-    border: 5px solid gray;
-    margin-top: 50px;
-    margin-bottom: 25px;
+/*Table border*/
+.subContatiner
+{
+    border: 2px solid #030000;
+
+    margin-top: 25px;
+    margin-bottom: 0;
     border-radius: 20px;
     padding: 20px;
     align-items: center;
@@ -269,10 +320,11 @@ td {
 
 /* ------------------------------------- ROOM VIEWER -------------------------------------  */
 
-.roomContainer {
+.roomContainer
+{
     display: flex;
     justify-content: center;
-    border: 5px solid red;
+    border: 5px solid rgb(3, 0, 0);
 }
 
 /* button {

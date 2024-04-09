@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <meta charset="UTF-8">
     <title>Chat</title>
     <link rel="stylesheet" href="css/index.css">
@@ -39,8 +38,8 @@
             <div>
               <table id="message_area"> <!-- border = "1" -->
                 <tr>
-                  <td class="titleSystem">--------------------------System--------------------------</td>
-                  <td class="titleUser">---------------------------User---------------------------</td>
+                  <td class="titleSystem">SYSTEM</td>
+                  <td class="titleUser">USER</td>
                 </tr>
               </table>
             </div>
@@ -48,12 +47,20 @@
       </div>
 
       <div class="sender">
+
         <input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
         <button class="senderbtns">SEND</button>
+
       </div>
+
+      <div class = "image">
+
+        <input id="input_button" type="file" accept="image/png, image/jpeg"/>
+        <button class="senderbtns" onclick="sendImage()">SEND IMAGE</button>
+
+      </div>
+
   
-      <input id="input_button" type="file" accept="image/png, image/jpeg"/>
-      <button class="senderbtns" onclick="sendImage()">SEND IMAGE</button>
 
     </div>
 

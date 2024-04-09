@@ -119,7 +119,7 @@ function enterRoom(code) {
         console.log(event.data);
         switch(message.type) {
             case "user":
-                addTable(1,"[" + timestamp() + "] " + message.message + "\n");
+                addTable(1,message.message + " [" + timestamp() + "] " + "\n ");
                 break;
             case "other":
                 addTable(0,"[" + timestamp() + "] " + message.message + "\n");
@@ -229,9 +229,16 @@ function addTable(column, text)
     //left side, column = 0
     if(!column) {
         cell1.textContent = text;
-    } else { //right side, column = 1
-        cell2.textContent = text;
+        cell1.style.backgroundColor = "grey";
     }
+    else
+    { //right side, column = 1
+        cell2.textContent = text;
+        cell2.style.backgroundColor = "#467eff";
+
+    }
+
+
 
     newRow.appendChild(cell1)
     newRow.appendChild(cell2)
