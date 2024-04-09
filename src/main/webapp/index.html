@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-
-    <meta charset="UTF-8">
-    <title>Chat</title>
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/index.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <script src="js/index.js"></script>
 
   </head>
   <body onload="getRoomList()">
@@ -35,7 +34,7 @@
     <div class="container2">
 
       <div class="subContatiner">
-        
+
             <div>
               <table id="message_area"> <!-- border = "1" -->
                 <tr>
@@ -44,14 +43,14 @@
                 </tr>
               </table>
             </div>
-    
+
       </div>
 
       <div class="sender">
         <input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
         <button class="senderbtns">SEND</button>
       </div>
-  
+
       <input id="input_button" type="file" accept="image/png, image/jpeg"/>
       <button class="senderbtns" onclick="sendImage()">SEND IMAGE</button>
 
@@ -97,11 +96,11 @@
         </tr>
         </thead>
         <tbody id="refresh-list-body">
-  
+
           <!--this tr has to be here for js refreshList()-->
           <tr id="tr_to_remove"></tr>
         </tbody>
-  
+
       </table>
     </div>
 

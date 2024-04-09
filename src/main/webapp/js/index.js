@@ -1,5 +1,8 @@
 let ws;
 
+//quick note, some of these functions got copied from another file by Ryan
+//so there signatures will be BigGuyAtOTU, everyone helped make the javascript
+
 //send image stuff
 function sendImage() {
     //get image and store it
@@ -7,29 +10,6 @@ function sendImage() {
     if(img.files.length === 0) {
         console.log("img empty");
     } else {
-        // console.log("img:");
-        // console.log(img.files[0]);
-        // // ws.send("test");
-        //
-        // //json stringify the file, to do this, make an object and stringify that
-        // let file = img.files[0];
-        // let object = {
-        //     'lastModified' : file.lastModified,
-        //     'lastModifiedDate' : file.lastModifiedDate,
-        //     'name' : file.name,
-        //     'size' : file.size,
-        //     'type' : file.size,
-        // };
-        // let serialize = "";
-        // const file_reader = new FileReader();
-        // file_reader.writeText(file).then(r => serialize);
-        // console.log(serialize);
-        // let blob;
-        // file_reader.readAsText(blob);
-        //
-        // let jsonfile = JSON.stringify(object)
-        // console.log(jsonfile);
-        // ws.send(jsonfile);
 
         let file = img.files[0];
         const file_reader = new FileReader();
@@ -47,8 +27,9 @@ function sendImage() {
 
 }
 
+//logic to make a new room
 function newRoom() {
-    // calling the ChatServlet to retrieve a new room ID
+    // get request to the ChatServlet to retrieve a new randomized room ID
     let callURL = "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet";
     fetch(callURL, {
         method: 'GET',
@@ -62,7 +43,7 @@ function newRoom() {
 }
 
 function getRoomList() {
-    // calling the ChatServlet to retrieve a new room ID
+    // calling the ChatServlet to get/refresh the current room list
     console.log("making request...");
     let callURL = "http://localhost:8080/WSChatServer-1.0-SNAPSHOT/chat-servlet/room_list";
     fetch(callURL, {
@@ -76,6 +57,7 @@ function getRoomList() {
         .then(response => refreshList(response)); // enter the room with the code
 }
 
+//clears the table that stores the current rooms
 function clearTable(tableRef) {
     //get all tr elements
     let trs = tableRef.querySelectorAll("tr");
@@ -87,10 +69,10 @@ function clearTable(tableRef) {
 }
 
 function refreshList(room_list) {
-    console.log("room_list: ");
-    console.log(room_list);
+    //logic to refresh room list
     let tableRef = document.getElementById("refresh-list-body");
     clearTable(tableRef); //clear table so we have one that refreshes
+    //append the entries of the received room_list
     for (let i = 0; i < room_list.length; i++) {
         let row = document.createElement("tr");
         row.id = "tr_to_remove";
@@ -108,55 +90,61 @@ function refreshList(room_list) {
 
 function enterRoom(code) {
 
-    // refresh the list of rooms //TODO: jacob here: I assume we need to have an active list of rooms
-
     // create the web socket
     ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/" + code);
     console.log("room code: " + code)
 
+    //function that is called when receiving a message from backend
     ws.onmessage = function (event) {
         let message = JSON.parse(event.data);
         console.log(event.data);
         switch(message.type) {
-            case "user":
+            case "user": //the user sent the message
                 addTable(1,"[" + timestamp() + "] " + message.message + "\n");
                 break;
-            case "other":
+            case "other": //the server or another user sent the message
                 addTable(0,"[" + timestamp() + "] " + message.message + "\n");
                 break;
-            case "ChatHistory":
+            case "ChatHistory": //the backend sent the history
                 //check for image
                 console.log("msg123: " + message.message.substring(0, 15));
-                if(message.message.substring(0, 15) === "data:image/png;") {
+                if(message.message.substring(0, 15) === "data:image/png;") { //check if hist is an image
                     addImageToTable(0, message.message);
                 } else {
                     addTable(0,"[hist] " + message.message + "\n");
                 }
                 break;
-            case "user-image":
+            case "user-image": //the user sent an image
                 addImageToTable(1, message.message);
                 break;
-            case "other-image":
+            case "other-image": //the server or another user sends an image
                 addImageToTable(0, message.message);
                 break;
-            default:
+            default: //just log the message, never called
                 console.log("type: " + message.type + ", msg: " + message.message);
 
         }
-
-        // document.getElementById("log").value += "[" + timestamp() + "] " + message.message + "\n";
     }
 
+    //add event listener to the enter key
     document.getElementById("input").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             let request = { "type": "chat", "msg": event.target.value };
             ws.send(JSON.stringify(request));
-
             event.target.value = "";
         }
     });
 
-
+    //add that same listener to the send button
+    document.getElementById("send_button").addEventListener("click", function () {
+        let msg = document.getElementById("input");
+        console.log("making request");
+        console.log(msg);
+        let request = { "type": "chat", "msg": msg.value};
+            ws.send(JSON.stringify(request));
+            msg.value = "";
+            console.log("request made: " + msg.value);
+    });
 }
 
 //credit to the class activity for the timestamp function
@@ -183,6 +171,7 @@ function closeNav() {
 
 // ------------------------------------- SIDE BAR -------------------------------------
 
+//logic for adding an image to the table, essentially the same as addTable()
 function addImageToTable(column, base64) {
     let table = document.getElementById('message_area')
     let newRow = document.createElement("tr")
@@ -212,14 +201,17 @@ function addImageToTable(column, base64) {
     table.appendChild(newRow);
 }
 
+//logic for displaying messages in the table
 function addTable(column, text)
 {
+    //grab and create elements
     let table = document.getElementById('message_area')
     let newRow = document.createElement("tr")
 
     let cell1 = document.createElement("td");
     let cell2 = document.createElement("td");
 
+    //set id and class
     cell1.id = "other";
     cell2.id = "user";
 
@@ -233,14 +225,9 @@ function addTable(column, text)
         cell2.textContent = text;
     }
 
+    //append children to the DOM
     newRow.appendChild(cell1)
     newRow.appendChild(cell2)
     table.appendChild(newRow);
 
-
 }
-
-
-
-
-
