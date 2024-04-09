@@ -134,6 +134,7 @@ public class ChatServer {
 
     private String makeMessageJSON(String type, String message) {
         return "{\"type\": \"" + type + "\", \"message\":\"" + message + "\"}";
+
     }
 
 }

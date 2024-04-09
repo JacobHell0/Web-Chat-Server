@@ -7,6 +7,7 @@ function newRoom(){
         method: 'GET',
         headers: {
             'Accept': 'text/plain',
+
         },
     })
         .then(response => response.text())
