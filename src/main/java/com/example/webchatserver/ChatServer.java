@@ -33,6 +33,9 @@ public class ChatServer {
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
 
+        //send the history to the user
+        sendHistoryToClient(session, roomID);
+
         //basically userAlert just prevents it from going into the chatHistory
         sendMessageToClient(session, "userAlert", "(Server): Welcome to the chat room. Please state your username to begin.", roomID);
 
@@ -75,16 +78,17 @@ public class ChatServer {
 
     private void standardMsg(String userID, Session session, String message) throws IOException {
         String username = usernames.get(userID);
-        System.out.println(username);
         String roomId = roomList.get(userID);
         for(Session peer: session.getOpenSessions()){
-            //for chatrooms with different rooms //TODO Write some meaningfull comments @jacob
-            //if statement saying if the userID is in the roomID
-            //since the roomList uses UUID, not username
-            if(roomList.get(peer.getId()).equals(roomId))
-            {
-//                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(" + username + "): " + message));
-                sendMessageToClient(peer, "chatUser","(" + username + "): " + message, roomId);
+            //check if peer is user so it sends correct type
+            if(peer.getId().equals(userID)) {
+                sendMessageToClient(peer, "user", "(" + username + "): " + message, roomId);
+            } else { //actual peer
+                //since the roomList uses UUID, not username
+                if (roomList.get(peer.getId()).equals(roomId)) //check if peer is in same room
+                {
+                    sendMessageToClient(peer, "other", "(" + username + "): " + message, roomId);
+                }
             }
         }
     }
@@ -93,7 +97,7 @@ public class ChatServer {
         usernames.put(userID, message);
 //        session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): Welcome, " + message + "!\"}");
 //        session.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): Welcome, " + message + "!"));
-        sendMessageToClient(session, "chat", "(Server): Welcome, " + message + "!", roomId);
+        sendMessageToClient(session, "other", "(Server): Welcome, " + message + "!", roomId);
 
         //broadcast this person joined the server to the rest
         String username = usernames.get(userID);
@@ -102,16 +106,26 @@ public class ChatServer {
         for(Session peer: session.getOpenSessions()){
             if((!peer.getId().equals(userID)) && (roomList.get(peer.getId()).equals(roomId))){ //not the client that just connected
 //                peer.getBasicRemote().sendText(makeMessageJSON("chat", "(Server): " + message + " joined the chat room."));
-                sendMessageToClient(peer, "chat", "(Server): " + message + " joined the chat room.", roomId);
+                //TODO differentiate user
+                sendMessageToClient(peer, "other", "(Server): " + message + " joined the chat room.", roomId);
             }
+        }
+    }
+
+    private void sendHistoryToClient(Session session, String roomId) throws IOException {
+        //send the entire map for that room to the client
+        if(!chatHistory.containsKey(roomId)) return;
+        List<String> hist = new ArrayList<String>(chatHistory.get(roomId));
+        for(String item : hist) {
+            sendMessageToClient(session, "ChatHistory", item, roomId);
         }
     }
 
     private void sendMessageToClient(Session session, String type, String message, String roomId) throws IOException {
 
         //check if element is userAlert
-        if(type.equals("userAlert")) { //don't create the entry
-            session.getBasicRemote().sendText(makeMessageJSON("chat", message));
+        if(type.equals("userAlert")) { //don't create the entry in chat history
+            session.getBasicRemote().sendText(makeMessageJSON("other", message));
             return;
         }
 
