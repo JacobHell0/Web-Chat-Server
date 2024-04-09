@@ -1,83 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Chat</title>
-  <link rel="stylesheet" href="css/index.css">
-  <script src="js/index.js"></script>
+  <head>
+
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/index.js"></script>
+
+  </head>
+  <body onload="getRoomList()">
+    <div class="container">
+
+      <!-- SIDE BAR -->
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <nav id = "NAVbar">
+          <a href="./index.html">Home</a>
+          <p> </p>
+          <a href="./about.html">About</a>
+        </nav>
+      </div>
+      <!-- SIDE BAR -->
+
+      <div id="main">
+        <button class="openbtn" onclick="openNav()">&#9776;</button>
+      </div>
+
+      <button class="btns" id="the-button" onClick="newRoom()">Join Room</button>
+      <button class="btns" id="other debug button" onClick="getRoomList()">Print Room List</button>
+
+    </div>
 
 
+    <div class="container2">
 
-</head>
-<body onload="getRoomList()">
-<div class="container">
+      <div class="subContatiner">
+        
+            <div>
+              <table id="message_area"> <!-- border = "1" -->
+                <tr>
+                  <td class="titleSystem">--------------------------System--------------------------</td>
+                  <td class="titleUser">---------------------------User---------------------------</td>
+                </tr>
+              </table>
+            </div>
+    
+      </div>
 
-  <!-- SIDE BAR -->
-  <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <nav id = "NAVbar">
-      <a href="./index.html">Home</a>
-      <p> </p>
-      <a href="./about.html">About</a>
-    </nav>
-  </div>
-  <!-- SIDE BAR -->
+      <div class="sender">
+        <input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
+        <button class="senderbtns">SEND</button>
+      </div>
+  
+      <input id="input_button" type="file" accept="image/png, image/jpeg"/>
+      <button class="senderbtns" onclick="sendImage()">SEND IMAGE</button>
 
-  <div id="main">
-    <button class="openbtn" onclick="openNav()">&#9776;</button>
-  </div>
+    </div>
 
-  <button class="btns" id="the-button" onClick="newRoom()">Join Room</button>
-  <button class="btns" id="other debug button" onClick="getRoomList()">Print Room List</button>
+    <!--    <button onclick="addTable(1, 'test')">DEBUG, REMOVE: Add Row</button>-->
 
-</div>
+    <!-- <section>
+      <article>
+        <div>
+          <table border = "1" id="message_area">
+            <tr>
+              <td class="titleSystem">--------------------------System--------------------------</td>
+              <td class="titleUser">---------------------------User---------------------------</td>
+            </tr>
+          </table>
+        </div>
 
 
+      </article>
+    </section> -->
 
-<section>
-  <article>
-    <div>
-      <table border = "1" id="message_area">
+    <!--<textarea title="Chat Log" id="log" readonly></textarea>-->
+
+
+    <!--<input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>-->
+
+    <!-- <div class="sender">
+      <input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
+      <button class="senderbtns">SEND</button>
+    </div>
+
+    <input id="input_button" type="file" accept="image/png, image/jpeg"/>
+    <button class="senderbtns" onclick="sendImage()">SEND IMAGE</button> -->
+
+
+    <div class="roomContainer">
+      <table id="refresh_list">
+
+        <thead>
         <tr>
-          <td>--------------------------System--------------------------</td>
-          <td>---------------------------User---------------------------</td>
+          <td>Rooms</td>
         </tr>
+        </thead>
+        <tbody id="refresh-list-body">
+  
+          <!--this tr has to be here for js refreshList()-->
+          <tr id="tr_to_remove"></tr>
+        </tbody>
+  
       </table>
     </div>
-<!--    <button onclick="addTable(1, 'test')">DEBUG, REMOVE: Add Row</button>-->
 
-
-  </article>
-</section>
-
-<!--<textarea title="Chat Log" id="log" readonly></textarea>-->
-
-
-<!--<input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>-->
-
-<div class="sender">
-  <input class="inputBar"  title="Chat Input" id="input" type="text" placeholder="Send a Message"/>
-  <button class="senderbtns">SEND</button>
-</div>
-
-<input id="input_button" type="file" accept="image/png, image/jpeg"/>
-<button class="senderbtns" onclick="sendImage()">SEND IMAGE</button>
-
-
-<table id="refresh_list">
-  <thead>
-  <tr>
-    <td>Rooms</td>
-  </tr>
-  </thead>
-  <tbody id="refresh-list-body">
-
-    <!--this tr has to be here for js refreshList()-->
-    <tr id="tr_to_remove"></tr>
-  </tbody>
-
-
-</table>
-
-</body>
+  </body>
 </html>
