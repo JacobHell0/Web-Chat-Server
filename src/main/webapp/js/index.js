@@ -78,6 +78,7 @@ function refreshList(room_list) {
         row.id = "tr_to_remove";
         let cell = document.createElement("td");
         let button_to_append = document.createElement("button");
+        button_to_append.className += "senderbtns";
         button_to_append.textContent = room_list[i];
         button_to_append.onclick = function () { enterRoom(room_list[i]); }; //ripped straight from lab8/9
 

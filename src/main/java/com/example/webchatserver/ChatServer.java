@@ -172,6 +172,8 @@ public class ChatServer {
 
         //this fixes a duplicate message from being recorded in the mpa
         if(type.equals("ChatHistory")) {return;}
+        if(type.equals("other")) {return;}
+        if(type.equals("other-image")) {return;}
         if(chatHistory.containsKey(roomId)){
             //append message
             List<String> history;
