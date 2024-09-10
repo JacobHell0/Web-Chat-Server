@@ -1,9 +1,9 @@
-# A. ------- PROJECT INFORMATION --------
+# ------- PROJECT INFORMATION --------
 
 ## Group Members: Jacob Rempel, Ryan Warrener, Bilal Nazar
 
 # Media
-## Video
+## Demo Video
 Click this -->
 <a href="https://www.youtube.com/watch?v=f5eMM55qT6o">
  <img src="http://img.youtube.com/vi/f5eMM55qT6o/mqdefault.jpg" alt="Watch the video" width="240" height="180" border="10" />
@@ -26,7 +26,7 @@ greets and announces whenever a new user/client has joined. Timestamps and the u
 sent messages. The user/client interacts with a beautifully displayed UI allowing them to see current chatrooms
 and access information about the contributors of the application. 
 
-# B. ---------- IMPROVEMENTS ------------
+# ---------- IMPROVEMENTS ------------
 
 The improvements that were made to the UI was:
 
@@ -56,7 +56,7 @@ The improvements that were made to the Functionality of the program was:
 
     * The chat is displayed as a table, allowing us to differentiate messages the user sends as well as display pictures.
 
-# C. ---------- HOW TO RUN --------------
+# ---------- HOW TO RUN --------------
 
 ### Step 1)
 Open the Github of the assignment and copy the link of the assignment code.
@@ -101,14 +101,14 @@ users within the chatroom will be notified that the user has left.
 There will be a "Menu" icon on the top left of the screen. Clicking on it will allow you to navigate to the 
 "About" page
 
-# D. ---------- OTHER RESOURCES ----------
+# ---------- OTHER RESOURCES ----------
 
 Resources that were used to assist with the solution were from the StackOverflow forums that assisted 
 with troubleshooting the backend and frontend of the websites. The use of Lab Codes and In-Class codes were
 used to help develop many aspects of the backend. The use of MDN Web Docs and w3Schools was used to help with 
 the creation of the Front-End.
 
-# E. -------- CONTRIBUTION REPORT --------
+# -------- CONTRIBUTION REPORT --------
 
 
 | Name          | Area Worked On | Contribution Percentage |
